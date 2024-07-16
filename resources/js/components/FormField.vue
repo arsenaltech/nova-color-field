@@ -54,6 +54,7 @@ import tinycolor from 'tinycolor2';
 export default {
   name: 'NovaColorField',
   mixins: [HandlesValidationErrors, DependentFormField],
+  emits: ['selectedColor','colorAttribute'],
 
   components: {
     'chrome-picker': Chrome,
@@ -91,6 +92,7 @@ export default {
 
     setVcValue(newValue) {
       this.value = tinycolor(newValue.hex8);
+      Nova.$emit('selectedColor',this.value);
     },
 
     fill(formData) {
@@ -104,6 +106,7 @@ export default {
     valueUpdated() {
       if (this.field) {
         this.emitFieldValueChange(this.field.attribute, this.saveValue);
+        Nova.$emit('colorAttribute',this.field.attribute)
       }
     },
 
