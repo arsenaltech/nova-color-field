@@ -92,7 +92,7 @@ export default {
 
     setVcValue(newValue) {
       this.value = tinycolor(newValue.hex8);
-      Nova.$emit('selectedColor',this.value);
+      Nova.$emit('selectedColor', this.value);
     },
 
     fill(formData) {
@@ -106,7 +106,7 @@ export default {
     valueUpdated() {
       if (this.field) {
         this.emitFieldValueChange(this.field.attribute, this.saveValue);
-        Nova.$emit('colorAttribute',this.field.attribute)
+        Nova.$emit('colorAttribute', this.field.attribute);
       }
     },
 
@@ -136,7 +136,7 @@ export default {
       const pickerArea = this.$refs.pickerArea.$el;
       const target = event.target;
 
-      if (target === inputArea || target === pickerArea) return;
+      if (target === inputArea || pickerArea && target === pickerArea) return;
       if (inputArea.contains(target) || pickerArea.contains(target)) return;
       this.hidePicker();
     },
@@ -149,6 +149,7 @@ export default {
         }
         this.shouldShowPicker = true;
       }
+      Nova.$emit('colorAttribute', this.field.attribute);
     },
     togglePicker() {
       if (this.shouldShowPicker) {
