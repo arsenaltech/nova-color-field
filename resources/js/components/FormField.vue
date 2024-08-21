@@ -39,6 +39,7 @@
         :palette="palette"
         :modelValue="vcValue"
         @update:modelValue="setVcValue"
+        :disableAlpha="disableAlpha"
       />
 
      
@@ -200,6 +201,9 @@ export default {
     rgbaValue() {
       return this.value ? this.value.toRgbString() : '';
     },
+    disableAlpha(){
+      return this.currentField.disableAlpha;      
+    }
   },
 };
 </script>
