@@ -83,6 +83,14 @@ export default {
       document.removeEventListener('click', this.documentClick);
     }
   },
+  watch: {
+    'field.value': {
+      immediate: true,
+      handler() {
+        this.setInitialValue();
+      },
+    },
+  },
 
   methods: {
     setInitialValue() {
@@ -93,6 +101,7 @@ export default {
 
     setVcValue(newValue) {
       this.value = tinycolor(newValue.hex8);
+      this.vcValue = this.value.toRgbString();
       Nova.$emit('selectedColor', this.value);
     },
 
