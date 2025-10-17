@@ -39,6 +39,7 @@
         :palette="palette"
         :modelValue="vcValue"
         @update:modelValue="setVcValue"
+        :disableAlpha="disableAlpha"
       />
 
      
@@ -54,6 +55,7 @@ import tinycolor from 'tinycolor2';
 export default {
   name: 'NovaColorField',
   mixins: [HandlesValidationErrors, DependentFormField],
+  emits: ['selectedColor','colorAttribute'],
 
   components: {
     'chrome-picker': Chrome,
@@ -81,6 +83,14 @@ export default {
       document.removeEventListener('click', this.documentClick);
     }
   },
+  watch: {
+    'field.value': {
+      immediate: true,
+      handler() {
+        this.setInitialValue();
+      },
+    },
+  },
 
   methods: {
     setInitialValue() {
@@ -91,6 +101,8 @@ export default {
 
     setVcValue(newValue) {
       this.value = tinycolor(newValue.hex8);
+      this.vcValue = this.value.toRgbString();
+      Nova.$emit('selectedColor', this.value);
     },
 
     fill(formData) {
@@ -104,6 +116,7 @@ export default {
     valueUpdated() {
       if (this.field) {
         this.emitFieldValueChange(this.field.attribute, this.saveValue);
+        Nova.$emit('colorAttribute', this.field.attribute);
       }
     },
 
@@ -133,7 +146,7 @@ export default {
       const pickerArea = this.$refs.pickerArea.$el;
       const target = event.target;
 
-      if (target === inputArea || target === pickerArea) return;
+      if (target === inputArea || pickerArea && target === pickerArea) return;
       if (inputArea.contains(target) || pickerArea.contains(target)) return;
       this.hidePicker();
     },
@@ -146,6 +159,7 @@ export default {
         }
         this.shouldShowPicker = true;
       }
+      Nova.$emit('colorAttribute', this.field.attribute);
     },
     togglePicker() {
       if (this.shouldShowPicker) {
@@ -196,6 +210,9 @@ export default {
     rgbaValue() {
       return this.value ? this.value.toRgbString() : '';
     },
+    disableAlpha(){
+      return this.currentField.disableAlpha;      
+    }
   },
 };
 </script>

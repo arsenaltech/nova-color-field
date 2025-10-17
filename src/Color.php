@@ -122,4 +122,8 @@ class Color extends Field
             $model->{$attribute} = $this->isNullValue($value) ? null : $value;
         }
     }
+    public function disableAlpha($disableAlpha = false)
+    {
+        return $this->withMeta(['disableAlpha' => $disableAlpha]);
+    }
 }
