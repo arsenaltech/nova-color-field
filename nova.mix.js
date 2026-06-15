@@ -21,6 +21,7 @@ class NovaExtension {
     webpackConfig.externals = {
       vue: 'Vue',
       vuex: 'Vuex',
+      axios: 'axios',
     }
 
     webpackConfig.resolve.alias = {
