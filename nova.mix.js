@@ -20,13 +20,12 @@ class NovaExtension {
   webpackConfig(webpackConfig) {
     webpackConfig.externals = {
       vue: 'Vue',
-      vuex: 'Vuex',
+      'laravel-nova': 'LaravelNova',
       axios: 'axios',
     }
 
     webpackConfig.resolve.alias = {
       ...(webpackConfig.resolve.alias || {}),
-      'laravel-nova': path.join(__dirname, 'vendor/laravel/nova/resources/js/mixins/packages.js'),
     }
 
     webpackConfig.output = {
